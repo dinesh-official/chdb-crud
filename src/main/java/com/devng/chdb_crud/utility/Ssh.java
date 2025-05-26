@@ -3,7 +3,7 @@ package com.devng.chdb_crud.utility;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-public class SSHUtil {
+public class Ssh {
 
     public static boolean supportsPasswordAuth(String ip) {
         try {
