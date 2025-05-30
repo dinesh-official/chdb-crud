@@ -7,25 +7,38 @@ public class Ssh {
 
     public static boolean supportsPasswordAuth(String ip) {
         try {
-            ProcessBuilder pb = new ProcessBuilder("ssh", "-o", "StrictHostKeyChecking=no", "-o", "BatchMode=no", "root@" + ip);
+            ProcessBuilder pb = new ProcessBuilder(
+                    "ssh",
+                    "-o", "BatchMode=yes",
+                    "-o", "ConnectTimeout=5",
+                    "-o", "StrictHostKeyChecking=no",
+                    "root@" + ip,
+                    "exit"
+            );
             pb.redirectErrorStream(true);
-
             Process process = pb.start();
 
-            try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-                String line;
-                long start = System.currentTimeMillis();
-                while ((line = reader.readLine()) != null) {
-                    line = line.toLowerCase();
-                    if (line.contains("password")) {
-                        process.destroyForcibly(); // kill after detection
-                        return true;
-                    }
-                    if (System.currentTimeMillis() - start > 8000) {
-                        process.destroyForcibly();
-                        break;
-                    }
-                }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            StringBuilder output = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                output.append(line.toLowerCase()).append("\n");
+            }
+
+            if (!process.waitFor(5, java.util.concurrent.TimeUnit.SECONDS)) {
+                process.destroyForcibly();
+                return false;
+            }
+
+            int exitCode = process.exitValue();
+            String outStr = output.toString();
+
+            if (outStr.contains("permission denied (password") || outStr.contains("password")) {
+                return true;
+            } else if (outStr.contains("permission denied (publickey") || outStr.contains("publickey")) {
+                return false;
+            } else if (exitCode == 0) {
+                return false;
             }
 
         } catch (Exception e) {
@@ -34,4 +47,5 @@ public class Ssh {
 
         return false;
     }
+
 }

@@ -29,7 +29,6 @@ public class FlowDataService {
                 long count = rs.getLong("flow_count");
 
                 if (noPasswordFlag == 2) {
-                    // Return all IPs immediately without SSH testing
                     results.add(new FlowData(ip, count));
                     if (results.size() >= maxResults) {
                         break;
