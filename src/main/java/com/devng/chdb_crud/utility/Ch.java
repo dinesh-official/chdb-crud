@@ -2,7 +2,7 @@ package com.devng.chdb_crud.utility;
 
 public class Ch {
 
-    private static final String URL = "jdbc:clickhouse://164.52.197.24:8123/default";
+    private static final String URL = "jdbc:clickhouse://216.48.176.217:8123/default";
     private static final String USER = "default";
     private static final String PASSWORD = "";
 
