@@ -1,73 +1,75 @@
 package com.devng.chdb_crud.model;
 
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+
 public class Mail {
-    private int id;
-    private String ip;
-    private int count;
-    private String email;
-    private LocalDateTime createdAt;
 
-    public Mail() {
-    }
+    private Long id;
 
-    public Mail(int id, String ip, int count, String email, LocalDateTime createdAt) {
-        this.id = id;
-        this.ip = ip;
-        this.count = count;
-        this.email = email;
-        this.createdAt = createdAt;
-    }
+    private LocalDateTime createdAd;
+    private String vmId;
+    private String vmName;
+    private String vmIp;
+    private String vmOwner;
+    private String mailType;
 
-    public int getId() {
+    // Getters and Setters
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    // Added setter for id
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getIp() {
-        return ip;
+    public LocalDateTime getCreatedAd() {
+        return createdAd;
     }
 
-    public void setIp(String ip) {
-        this.ip = ip;
+    public void setCreatedAd(LocalDateTime createdAd) {
+        this.createdAd = createdAd;
     }
 
-    public int getCount() {
-        return count;
+    public String getVmId() {
+        return vmId;
     }
 
-    public void setCount(int count) {
-        this.count = count;
+    public void setVmId(String vmId) {
+        this.vmId = vmId;
     }
 
-    public String getEmail() {
-        return email;
+    public String getVmName() {
+        return vmName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setVmName(String vmName) {
+        this.vmName = vmName;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
+    public String getVmIp() {
+        return vmIp;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setVmIp(String vmIp) {
+        this.vmIp = vmIp;
     }
 
-    @Override
-    public String toString() {
-        return "Mail{" +
-                "id=" + id +
-                ", ip='" + ip + '\'' +
-                ", count=" + count +
-                ", email='" + email + '\'' +
-                ", createdAt=" + createdAt +
-                '}';
+    public String getVmOwner() {
+        return vmOwner;
+    }
+
+    public void setVmOwner(String vmOwner) {
+        this.vmOwner = vmOwner;
+    }
+
+    public String getMailType() {
+        return mailType;
+    }
+
+    public void setMailType(String mailType) {
+        this.mailType = mailType;
     }
 }
