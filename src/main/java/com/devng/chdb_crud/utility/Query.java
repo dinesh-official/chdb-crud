@@ -31,9 +31,6 @@ public class Query {
 
 
 
-
-
-
     public static String getPassword(int ipDstPort, int dstAsn, int intervalHours, int flowCountThreshold) {
         return String.format("""
         SELECT

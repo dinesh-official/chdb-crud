@@ -3,24 +3,30 @@ package com.devng.chdb_crud.service;
 import com.devng.chdb_crud.model.Mail;
 import com.devng.chdb_crud.utility.Config;
 import com.devng.chdb_crud.utility.Query;
+import com.devng.chdb_crud.utility.Util;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.System.out;
+
 @Service
 public class MailService {
 
     private final Config db;
 
+
     public MailService(Config db) {
         this.db = db;
     }
+    List<Mail> results = new ArrayList<>();
+
 
     // Fetch mail records based on filters and date interval
     public List<Mail> fetchMailRecords(String vmId, String vmOwner, String vmIp, String vmName, String mailType, int lastDays) {
-        List<Mail> results = new ArrayList<>();
+        results.clear();
 
         try (Connection conn = DriverManager.getConnection(db.getMysqlUrl(),db.getMysqlUsername(), db.getMysqlPassword());
              Statement stmt = conn.createStatement();
@@ -44,8 +50,12 @@ public class MailService {
             e.printStackTrace();
         }
 
+        out.println(Util.alreadyMailed(results,vmId,vmOwner,vmIp,vmName,mailType));
         return results;
+
     }
+
+
 
     // Insert a mail record into DB
     public boolean insertMailRecord(String vmId, String vmName, String vmIp, String vmOwner, String mailType) {
